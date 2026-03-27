@@ -2,14 +2,14 @@ import { useEffect, useState } from "react"
 import { Container, Table, Button, Spinner, Alert } from "react-bootstrap"
 
 
-// el flow de esta fn es : 
+// el flow de esta fn es:
 export default function UsuarioTable() {
     const [usuarios, setUsuarios] = useState([])
     const [cargando, setCargando] = useState(false)
     const [error, setError] = useState(null)
 
-    async function cargarUsuarios() {
-        try {
+    async function cargarUsuarios() {//esta fn se encarga de cargar los usuarios desde la API, es una fn asincrona porque hace una peticion a la API que puede tardar un tiempo en responder
+        try {//antes de hacer la peticion, limpiamos el error y ponemos el estado de cargando en true para mostrar un spinner mientras se cargan los usuarios
             setError(null)
             setCargando(true)
             const response = await fetch("https://hcodyjgsqsotpouxnzsd.supabase.co/rest/v1/usuarios", {
@@ -38,6 +38,7 @@ export default function UsuarioTable() {
             <div className="d-flex align-items-center gap-2 mb-3">
                 <Button variant="outline-light" onClick={cargarUsuarios} disabled={cargando}>
                     {cargando ? <Spinner size="sm" animation="border" /> : "Recargar"}
+                    {/* spinner es un componente de React Bootstrap que muestra un indicador de carga */ }
                 </Button>
             </div>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -68,8 +69,29 @@ export default function UsuarioTable() {
     )
 }
 
-// el flow para esto sera  paso a paso muy especifico es :
+// el flow para esto sera  paso a paso muy especifico es : 
 // 1. Crear un estado para guardar los usuarios
 // 2. Crear una funcion para cargar los usuarios desde la API
 // 3. Llamar a la funcion de cargar usuarios cuando el componente se monte
 // 4. Renderizar una tabla con los usuarios cargados
+// 5. Agregar un boton para recargar los usuarios manualmente
+// 6. Agregar un estado para manejar el error en caso de que no se puedan cargar los usuarios
+// 7. Agregar un estado para manejar el cargando mientras se cargan los usuarios
+
+
+//{
+//  el component spinner es un componente de React Bootstrap que muestra un indicador de carga, 
+//  se muestra cuando el estado de cargando es true y se oculta cuando es false, 
+//  el boton de recargar se deshabilita mientras se cargan los usuarios
+//  para evitar que se hagan varias peticiones a la API al mismo tiempo,
+//  el mensaje de error se muestra cuando el estado de error no es null, y 
+//  se oculta cuando el estado de error es null
+// }
+
+
+
+// Los componentes de react-bootstrap son componentes que use fueron =>  los siguientes => 
+// Container, Table, Button, Spinner, Alert, 
+// estos componentes nos permiten crear una interfaz de 
+// usuario con estilos predefinidos 
+// y responsivos sin tener que escribir CSS personalizado.
